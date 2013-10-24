@@ -86,6 +86,7 @@ Then press ctrl+x to save and close
 
 This will start the daemon and begin downloading the blockchain.
 Run this to test the daemon is working:
+
     sexcoind getinfo
 
 Download & install P2pool:
