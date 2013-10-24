@@ -43,41 +43,6 @@ Official wiki :
 -------------------------
 https://en.bitcoin.it/wiki/P2Pool
 
-Notes for SexCoin:
-=========================
-Requirements:
--------------------------
-In order to run P2Pool with the SexCoin network, you would need to build and install the
-ltc_scrypt module that includes the scrypt proof of work code that SexCoin uses for hashes.
-
-Linux:
-
-    cd litecoin_scrypt
-    sudo python setup.py install
-
-Windows (mingw):
-* Install MinGW: http://www.mingw.org/wiki/Getting_Started
-* Install Python 2.7: http://www.python.org/getit/
-
-In bash type this:
-
-    cd litecoin_scrypt
-    C:\Python27\python.exe setup.py build --compile=mingw32 install
-
-Windows (microsoft visual c++)
-* Open visual studio console
-
-In bash type this:
-
-    SET VS90COMNTOOLS=%VS110COMNTOOLS%	           # For visual c++ 2012
-    SET VS90COMNTOOLS=%VS100COMNTOOLS%             # For visual c++ 2010
-    cd litecoin_scrypt
-    C:\Python27\python.exe setup.py build --compile=mingw32 install
-	
-If you run into an error with unrecognized command line option '-mno-cygwin', see this:
-http://stackoverflow.com/questions/6034390/compiling-with-cython-and-mingw-produces-gcc-error-unrecognized-command-line-o
-
-
 Full Installation instructions
 =========================
 Linux:
@@ -100,7 +65,7 @@ Download and install sexcoin client:
     mkdir ~/.sexcoin
     nano ~/.sexcoin/sexcoin.conf
 
-Paste:
+Paste into editor:
 
     server=1
     rpcuser=user
@@ -121,7 +86,7 @@ Then press ctrl+x to save and close
 
 This will start the daemon and begin downloading the blockchain.
 Run this to test the daemon is working:
-    • sexcoind getinfo
+    sexcoind getinfo
 
 Download & install P2pool:
 
