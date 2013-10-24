@@ -86,21 +86,21 @@ Performed on Ubuntu 12.04 Server
 
 Prerequisites:
 
-    • sudo apt-get update
-    • sudo apt-get install python-software-properties screen git python-rrdtool python-pygame python-scipy 
-    • sudo apt-get install python-twisted python-twisted-web python-imaging build-essential libglib2.0-dev libglibmm-2.4-dev 
-    • sudo apt-get install python-dev libboost-all-dev libdb++-dev autoconf automake ncurses-dev
+    sudo apt-get update
+    sudo apt-get install python-software-properties screen git python-rrdtool python-pygame python-scipy 
+    sudo apt-get install python-twisted python-twisted-web python-imaging build-essential libglib2.0-dev libglibmm-2.4-dev 
+    sudo apt-get install python-dev libboost-all-dev libdb++-dev autoconf automake ncurses-dev
 
 Download and install sexcoin client:
 
-    • git clone https://github.com/sexcoin-project/sexcoin.git
-    • cd /sexcoin/src
-    • make -f makefile.unix USE_UPNP=-
-    • cp sexcoind /usr/bin
-    • mkdir ~/.sexcoin
-    • nano ~/.sexcoin/sexcoin.conf
+    git clone https://github.com/sexcoin-project/sexcoin.git
+    cd /sexcoin/src
+    make -f makefile.unix USE_UPNP=-
+    cp sexcoind /usr/bin
+    mkdir ~/.sexcoin
+    nano ~/.sexcoin/sexcoin.conf
 
-    Paste:
+Paste:
 
     server=1
     rpcuser=user
@@ -115,9 +115,9 @@ Download and install sexcoin client:
     addnode=223.27.19.38:9560
     addnode=162.243.17.119:9560
 
-    Then press ctrl+x to save and close
+Then press ctrl+x to save and close
 
-    • /usr/bin/sexcoind -daemon
+    /usr/bin/sexcoind -daemon
 
 This will start the daemon and begin downloading the blockchain.
 Run this to test the daemon is working:
@@ -125,12 +125,12 @@ Run this to test the daemon is working:
 
 Download & install P2pool:
 
-    • cd 
-    • git clone https://github.com/wedge905/p2pool-sexcoin.git
-    • cd p2pool/litecoin_scrypt
-    • sudo python setup.py install
-    • cd ..
-    • python run_p2pool.py --net sexcoin -a <PAYOUTADDRESS> --give-author 0
+    cd 
+    git clone https://github.com/wedge905/p2pool-sexcoin.git
+    cd p2pool/litecoin_scrypt
+    sudo python setup.py install
+    cd ..
+    python run_p2pool.py --net sexcoin -a <PAYOUTADDRESS> --give-author 0
 
 That will get P2pool up and running.  There might be a delay if the daemon is still downloading the blockchain.  Once that is done, workers can now connect on port 9699
 
