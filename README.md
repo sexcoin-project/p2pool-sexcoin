@@ -88,12 +88,15 @@ That will get P2pool up and running.  There might be a delay if the daemon is st
 Windows:
 -------------------------    
 Download and unzip the latest P2Pool-Sexcoin binaries
+
     https://github.com/wedge905/p2pool-sexcoin/raw/master/p2pool_sexcoin_win32_13.3.zip 
 
 Minimum required command line:
+
     run_p2pool.exe --net sexcoin --give-author 0
 
 By default it assumes sexcoind is running on the same machine.  You can specify an different location for sexcoind:
+
     run_p2pool.exe --net sexcoin --bitcoind-address <ipaddress> --bitcoind-p2p-port <port> --give-author 0
 
 You can also run run_p2pool.exe -h for more command line options
