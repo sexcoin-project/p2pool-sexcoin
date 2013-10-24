@@ -1,6 +1,7 @@
 *.pyc
 *.pyo
 *~
+*.zip
 
 /data/
 /litecoin_scrypt/build/

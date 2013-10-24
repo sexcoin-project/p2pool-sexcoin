@@ -6,18 +6,6 @@ Generic:
 * Twisted >=10.0.0
 * python-argparse (for Python =2.6)
 
-Linux:
-* sudo apt-get install python-zope.interface python-twisted python-twisted-web
-* sudo apt-get install python-argparse # if on Python 2.6
-
-Windows:
-* Install Python 2.7: http://www.python.org/getit/
-* Install Twisted: http://twistedmatrix.com/trac/wiki/Downloads
-* Install Zope.Interface: http://pypi.python.org/pypi/zope.interface/3.8.0
-* Install python win32 api: http://sourceforge.net/projects/pywin32/files/pywin32/Build%20218/
-* Install python win32 api wmi wrapper: https://pypi.python.org/pypi/WMI/#downloads
-* Unzip the files into C:\Python27\Lib\site-packages
-
 Running P2Pool-Sexcoin:
 -------------------------
 To use P2Pool, you must be running your own local sexcoind. For standard
@@ -34,10 +22,6 @@ router. Forward port 8699 to the host running P2Pool.
 Run for additional options.
 
     python run_p2pool.py --help
-
-Donations towards further development:
--------------------------
-    BTC 1HNeqi3pJRNvXybNX4FKzZgYJsdTSqJTbk
 
 Official wiki :
 -------------------------
@@ -103,4 +87,19 @@ That will get P2pool up and running.  There might be a delay if the daemon is st
 
 Windows:
 -------------------------    
-    TBD
+Download and unzip the latest P2Pool-Sexcoin binaries
+    https://github.com/wedge905/p2pool-sexcoin/raw/master/p2pool_sexcoin_win32_13.3.zip 
+
+Minimum required command line:
+    run_p2pool.exe --net sexcoin --give-author 0
+
+By default it assumes sexcoind is running on the same machine.  You can specify an different location for sexcoind:
+    run_p2pool.exe --net sexcoin --bitcoind-address <ipaddress> --bitcoind-p2p-port <port> --give-author 0
+
+You can also run run_p2pool.exe -h for more command line options
+
+Donations towards further development:
+-------------------------
+    Original P2Pool Dev forrestv: BTC 1HNeqi3pJRNvXybNX4FKzZgYJsdTSqJTbk
+    P2Pool-Sexcoin Dev wedge: SXC SH6BeQUyNXXkSDNWuB8z1fAE7FC8L4n8i9
+    Sexcoin Developer lavajumper: SXC
