@@ -96,7 +96,7 @@ Download & install P2pool:
     cd p2pool/litecoin_scrypt
     sudo python setup.py install
     cd ..
-    python run_p2pool.py --net sexcoin -a <PAYOUTADDRESS> --give-author 0
+    python run_p2pool.py --net sexcoin -a <DEFAULTPAYOUTADDRESS> --give-author 0
 
 That will get P2pool up and running.  There might be a delay if the daemon is still downloading the blockchain.  Once that is done, workers can now connect on port 9699
 
