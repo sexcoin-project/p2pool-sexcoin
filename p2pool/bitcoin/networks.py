@@ -189,7 +189,7 @@ nets = dict(
         )),
         SUBSIDY_FUNC=lambda height: 100*100000000 >> (height + 1)//600000,
         POW_FUNC=lambda data: pack.IntType(256).unpack(__import__('ltc_scrypt').getPoWHash(data)),
-        BLOCK_PERIOD=150, # s
+        BLOCK_PERIOD=60, # s
         SYMBOL='SXC',
         CONF_FILE_FUNC=lambda: os.path.join(os.path.join(os.environ['APPDATA'], 'Sexcoin') if platform.system() == 'Windows' else os.path.expanduser('~/Library/Application Support/Sexcoin/') if platform.system() == 'Darwin' else os.path.expanduser('~/.sexcoin'), 'sexcoin.conf'),
         BLOCK_EXPLORER_URL_PREFIX='http://sexcoin.lavajumper.com:9950/block/',
