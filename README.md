@@ -43,7 +43,7 @@ Prerequisites:
 Download and install sexcoin client:
 
     git clone https://github.com/sexcoin-project/sexcoin.git
-    cd /sexcoin/src
+    cd sexcoin/src
     make -f makefile.unix USE_UPNP=-
     cp sexcoind /usr/bin
     mkdir ~/.sexcoin
