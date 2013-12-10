@@ -123,11 +123,11 @@ nets = dict(
     ),
     sexcoin=math.Object(
         PARENT=networks.nets['sexcoin'],
-        SHARE_PERIOD=15, # seconds
+        SHARE_PERIOD=45, # seconds
         CHAIN_LENGTH=24*60*60//30, # shares
         REAL_CHAIN_LENGTH=24*60*60//30, # shares
         TARGET_LOOKBEHIND=200, # shares
-        SPREAD=10, # blocks
+        SPREAD=30, # blocks
         IDENTIFIER='e037d5b8c6923415'.decode('hex'),
         PREFIX='7208c1a53ef629b0'.decode('hex'),
         P2P_PORT=8698,
