@@ -179,7 +179,7 @@ nets = dict(
         DUST_THRESHOLD=1e8,
     ),
     sexcoin=math.Object(
-        P2P_PREFIX='fbc0b6db'.decode('hex'),
+        P2P_PREFIX='face6969'.decode('hex'),
         P2P_PORT=9560,
         ADDRESS_VERSION=62,
         RPC_PORT=9561,
