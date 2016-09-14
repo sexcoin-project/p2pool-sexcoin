@@ -23,16 +23,6 @@ Run for additional options.
 
     python run_p2pool.py --help
 
-<<<<<<< HEAD
-Official wiki :
--------------------------
-https://en.bitcoin.it/wiki/P2Pool
-
-Full Installation instructions
-=======
-Donations towards further development:
--------------------------
-    1HNeqi3pJRNvXybNX4FKzZgYJsdTSqJTbk
 
 Official wiki:
 -------------------------
@@ -43,16 +33,10 @@ Alternate web frontend:
 * https://github.com/hardcpp/P2PoolExtendedFrontEnd
 
 Notes for Sexcoin:
->>>>>>> 89ab3f7b76c4029b75b307a923f879af6056199b
-=========================
-Linux:
--------------------------
-<<<<<<< HEAD
-Performed on Ubuntu 12.04 Server
 =======
 In order to run P2Pool with the Sexcoin network, you would need to build and install the
 ltc_scrypt module that includes the scrypt proof of work code that Sexcoin uses for hashes.
->>>>>>> 89ab3f7b76c4029b75b307a923f879af6056199b
+
 
 Prerequisites:
 
@@ -108,31 +92,30 @@ That will get P2pool up and running.  There might be a delay if the daemon is st
 
 Windows:
 -------------------------    
-Download and unzip the latest P2Pool-Sexcoin binaries
 
-<<<<<<< HEAD
-    https://github.com/wedge905/p2pool-sexcoin/raw/master/p2pool_sexcoin_win32_13.3.zip 
 =======
 Windows (Microsoft Visual C++)
 * Open visual studio console
->>>>>>> 89ab3f7b76c4029b75b307a923f879af6056199b
+
 
 Minimum required command line:
 
     run_p2pool.exe --net sexcoin --give-author 0
 
-<<<<<<< HEAD
+
 By default it assumes sexcoind is running on the same machine.  You can specify an different location for sexcoind:
 
     run_p2pool.exe --net sexcoin --bitcoind-address <ipaddress> --bitcoind-p2p-port <port> --give-author 0
 
 You can also run run_p2pool.exe -h for more command line options
 
+
 Donations towards further development:
 -------------------------
     Original P2Pool Dev forrestv: BTC 1HNeqi3pJRNvXybNX4FKzZgYJsdTSqJTbk
     P2Pool-Sexcoin Dev wedge: SXC SH6BeQUyNXXkSDNWuB8z1fAE7FC8L4n8i9
     Sexcoin Developer lavajumper: SXC
+
 =======
 Running P2Pool:
 -------------------------
@@ -158,6 +141,3 @@ License:
 -------------------------
 
 [Available here](COPYING)
-
-
->>>>>>> 89ab3f7b76c4029b75b307a923f879af6056199b
