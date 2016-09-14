@@ -25,7 +25,7 @@ def fragment(f, **kwargs):
         fragment(f, **dict((k, v[len(v)//2:]) for k, v in kwargs.iteritems()))
 
 class Protocol(p2protocol.Protocol):
-    VERSION = 1300
+    VERSION = 1600
     
     max_remembered_txs_size = 2500000
     
@@ -94,8 +94,7 @@ class Protocol(p2protocol.Protocol):
             self.badPeerHappened()
     
     def badPeerHappened(self):
-        if p2pool.DEBUG:
-            print "Bad peer banned:", self.addr
+        print "Bad peer banned:", self.addr
         self.disconnect()
         if self.transport.getPeer().host != '127.0.0.1': # never ban localhost
             self.node.bans[self.transport.getPeer().host] = time.time() + 60*60
@@ -105,6 +104,33 @@ class Protocol(p2protocol.Protocol):
         print 'Connection timed out, disconnecting from %s:%i' % self.addr
         self.disconnect()
     
+    def sendAdvertisement(self):
+        if self.node.serverfactory.listen_port is not None:
+            host=self.node.external_ip
+            port=self.node.serverfactory.listen_port.getHost().port
+            if host is not None:
+                if ':' in host:
+                    host, port_str = host.split(':')
+                    port = int(port_str)
+                if p2pool.DEBUG:
+                    print 'Advertising for incoming connections: %s:%i' % (host, port)
+                # Advertise given external IP address, just as if there were another peer behind us, with that address, who asked us to advertise it for them
+                self.send_addrs(addrs=[
+                    dict(
+                        address=dict(
+                            services=self.other_services,
+                            address=host,
+                            port=port,
+                        ),
+                        timestamp=int(time.time()),
+                    ),
+                ])
+            else:
+                if p2pool.DEBUG:
+                    print 'Advertising for incoming connections'
+                # Ask peer to advertise what it believes our IP address to be
+                self.send_addrme(port=port)
+
     message_version = pack.ComposedType([
         ('version', pack.IntType(32)),
         ('services', pack.IntType(64)),
@@ -118,7 +144,7 @@ class Protocol(p2protocol.Protocol):
     def handle_version(self, version, services, addr_to, addr_from, nonce, sub_version, mode, best_share_hash):
         if self.other_version is not None:
             raise PeerMisbehavingError('more than one version message')
-        if version < 1300:
+        if version < getattr(self.node.net, 'MINIMUM_PROTOCOL_VERSION', 1400):
             raise PeerMisbehavingError('peer too old')
         
         self.other_version = version
@@ -154,7 +180,7 @@ class Protocol(p2protocol.Protocol):
         
         if self.node.advertise_ip:
             self._stop_thread2 = deferral.run_repeatedly(lambda: [
-                self.send_addrme(port=self.node.serverfactory.listen_port.getHost().port) if self.node.serverfactory.listen_port is not None else None,
+                self.sendAdvertisement(),
             random.expovariate(1/(100*len(self.node.peers) + 1))][-1])
         
         if best_share_hash is not None:
@@ -180,13 +206,13 @@ class Protocol(p2protocol.Protocol):
         def update_remote_view_of_my_mining_txs(before, after):
             added = set(after) - set(before)
             removed = set(before) - set(after)
+            if removed:
+                self.send_forget_tx(tx_hashes=list(removed))
+                self.remote_remembered_txs_size -= sum(100 + bitcoin_data.tx_type.packed_size(before[x]) for x in removed)
             if added:
                 self.remote_remembered_txs_size += sum(100 + bitcoin_data.tx_type.packed_size(after[x]) for x in added)
                 assert self.remote_remembered_txs_size <= self.max_remembered_txs_size
                 fragment(self.send_remember_tx, tx_hashes=[x for x in added if x in self.remote_tx_hashes], txs=[after[x] for x in added if x not in self.remote_tx_hashes])
-            if removed:
-                self.send_forget_tx(tx_hashes=list(removed))
-                self.remote_remembered_txs_size -= sum(100 + bitcoin_data.tx_type.packed_size(before[x]) for x in removed)
         watch_id2 = self.node.mining_txs_var.transitioned.watch(update_remote_view_of_my_mining_txs)
         self.connection_lost_event.watch(lambda: self.node.mining_txs_var.transitioned.unwatch(watch_id2))
         
@@ -583,7 +609,7 @@ class SingleClientFactory(protocol.ReconnectingClientFactory):
         self.node.lost_conn(proto, reason)
 
 class Node(object):
-    def __init__(self, best_share_hash_func, port, net, addr_store={}, connect_addrs=set(), desired_outgoing_conns=10, max_outgoing_attempts=30, max_incoming_conns=50, preferred_storage=1000, known_txs_var=variable.Variable({}), mining_txs_var=variable.Variable({}), advertise_ip=True):
+    def __init__(self, best_share_hash_func, port, net, addr_store={}, connect_addrs=set(), desired_outgoing_conns=10, max_outgoing_attempts=30, max_incoming_conns=50, preferred_storage=1000, known_txs_var=variable.Variable({}), mining_txs_var=variable.Variable({}), advertise_ip=True, external_ip=None):
         self.best_share_hash_func = best_share_hash_func
         self.port = port
         self.net = net
@@ -593,6 +619,7 @@ class Node(object):
         self.known_txs_var = known_txs_var
         self.mining_txs_var = mining_txs_var
         self.advertise_ip = advertise_ip
+        self.external_ip = external_ip
         
         self.traffic_happened = variable.Event()
         self.nonce = random.randrange(2**64)
@@ -643,8 +670,8 @@ class Node(object):
             raise ValueError('already have peer')
         self.peers[conn.nonce] = conn
         
-        print '%s connection to peer %s:%i established. p2pool version: %i %r' % ('Incoming' if conn.incoming else 'Outgoing', conn.addr[0], conn.addr[1], conn.other_version, conn.other_sub_version)
-    
+        print '%s peer %s:%i established. p2pool version: %i %r' % ('Incoming connection from' if conn.incoming else 'Outgoing connection to', conn.addr[0], conn.addr[1], conn.other_version, conn.other_sub_version)
+        
     def lost_conn(self, conn, reason):
         if conn.nonce not in self.peers:
             raise ValueError('''don't have peer''')
