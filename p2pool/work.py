@@ -363,13 +363,14 @@ class WorkerBridge(worker_interface.WorkerBridge):
                     self.current_work.value['subsidy']*1e-8, self.node.net.PARENT.SYMBOL,
                     len(self.current_work.value['transactions']),
                 )
+                print 'Work Target: %064x' % ( target, )
                 print_throttle = time.time()
 
         #need this for stats
         self.last_work_shares.value[bitcoin_data.pubkey_hash_to_address(pubkey_hash, self.node.net.PARENT)]=share_info['bits']
         
         ba = dict(
-            version=max(self.current_work.value['version'], 0x20000000),
+            version=0x00000004, # [Block versions should be 4] BIP101=>max(self.current_work.value['version'], 0x20000000),
             previous_block=self.current_work.value['previous_block'],
             merkle_link=merkle_link,
             coinb1=packed_gentx[:-self.COINBASE_NONCE_LENGTH-4],
@@ -459,9 +460,12 @@ class WorkerBridge(worker_interface.WorkerBridge):
                 self.share_received.happened(bitcoin_data.target_to_average_attempts(share.target), not on_time, share.hash)
             
             if pow_hash > target:
+            #if 0 > 1:
                 print 'Worker %s submitted share with hash > target:' % (user,)
-                print '    Hash:   %56x' % (pow_hash,)
-                print '    Target: %56x' % (target,)
+                print '    Hash:   %064x' % (pow_hash,)
+                print '    Target: %064x' % (target,)
+                print '    Target Diff:   %s' % (bitcoin_data.target_to_difficulty(target),)
+                
             elif header_hash in received_header_hashes:
                 print >>sys.stderr, 'Worker %s submitted share more than once!' % (user,)
             else:
