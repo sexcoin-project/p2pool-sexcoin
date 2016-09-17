@@ -23,6 +23,12 @@ CONF_FILE_FUNC = lambda: os.path.join(os.path.join(os.environ['APPDATA'], 'Sexco
 BLOCK_EXPLORER_URL_PREFIX = 'http://be.lavajumper.com/block/'
 ADDRESS_EXPLORER_URL_PREFIX = 'http://be.lavajumper.com/address/'
 TX_EXPLORER_URL_PREFIX = 'http://be.lavajumper.com/tx/'
-SANE_TARGET_RANGE = (2**256//1000000000 - 1, 2**256//1000 - 1)
+SANE_TARGET_RANGE = (2**256//1000000000 - 1, 2**256//1000 - 1) # network/stratum difficulty
 DUMB_SCRYPT_DIFF = 2**16
 DUST_THRESHOLD = 0.03e8
+
+# 2**256//2**33 - 1 : Diff 1.9999
+#
+#
+#
+

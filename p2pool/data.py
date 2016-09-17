@@ -844,18 +844,19 @@ class OkayTracker(forest.Tracker):
                 print '   ', format_hash(head_hash), format_hash(self.items[head_hash].previous_hash), score
         best_head_score, best = decorated_heads[-1] if decorated_heads else (None, None)
         
-        if best is not None:
-            best_share = self.items[best]
-            punish, punish_reason = best_share.should_punish_reason(previous_block, bits, self, known_txs)
-            if punish > 0:
-                print 'Punishing share for %r! Jumping from %s to %s!' % (punish_reason, format_hash(best), format_hash(best_share.previous_hash))
-                best = best_share.previous_hash
+        # Sexcoin solve time is too short for this not to cause problems
+        #if best is not None:
+        #    best_share = self.items[best]
+        #    punish, punish_reason = best_share.should_punish_reason(previous_block, bits, self, known_txs)
+        #    if punish > 0:
+        #        print 'Punishing share for %r! Jumping from %s to %s!' % (punish_reason, format_hash(best), format_hash(best_share.previous_hash))
+        #        best = best_share.previous_hash
             
-            timestamp_cutoff = min(int(time.time()), best_share.timestamp) - 3600
-            target_cutoff = int(2**256//(self.net.SHARE_PERIOD*best_tail_score[1] + 1) * 2 + .5) if best_tail_score[1] is not None else 2**256-1
-        else:
-            timestamp_cutoff = int(time.time()) - 24*60*60
-            target_cutoff = 2**256-1
+        #    timestamp_cutoff = min(int(time.time()), best_share.timestamp) - 3600
+        #    target_cutoff = int(2**256//(self.net.SHARE_PERIOD*best_tail_score[1] + 1) * 2 + .5) if best_tail_score[1] is not None else 2**256-1
+        #else:
+        timestamp_cutoff = int(time.time()) - 24*60*60
+        target_cutoff = 2**256-1
         
         if p2pool.DEBUG:
             print 'Desire %i shares. Cutoff: %s old diff>%.2f' % (len(desired), math.format_dt(time.time() - timestamp_cutoff), bitcoin_data.target_to_difficulty(target_cutoff))
