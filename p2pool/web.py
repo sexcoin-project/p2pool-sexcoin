@@ -93,7 +93,7 @@ def get_web_root(wb, datadir_path, bitcoind_getinfo_var, stop_event=variable.Eve
     
     def get_global_stats():
         # averaged over last hour
-        if node.tracker.get_height(node.best_share_var.value) < 10:
+        if node.tracker.get_height(node.best_share_var.value) < 1:
             return None
         lookbehind = min(node.tracker.get_height(node.best_share_var.value), 3600//node.net.SHARE_PERIOD)
         
@@ -111,7 +111,7 @@ def get_web_root(wb, datadir_path, bitcoind_getinfo_var, stop_event=variable.Eve
         )
     
     def get_local_stats():
-        if node.tracker.get_height(node.best_share_var.value) < 10:
+        if node.tracker.get_height(node.best_share_var.value) < 1:
             return None
         lookbehind = min(node.tracker.get_height(node.best_share_var.value), 3600//node.net.SHARE_PERIOD)
         
