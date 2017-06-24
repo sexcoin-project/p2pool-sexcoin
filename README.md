@@ -1,3 +1,4 @@
+# Sexcoin P2Pool
 Requirements:
 -------------------------
 Generic:
